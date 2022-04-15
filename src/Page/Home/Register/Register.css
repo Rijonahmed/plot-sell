@@ -1,4 +1,4 @@
-.register-container input {
+.register-container input:not([type=checkbox]) {
   display: block;
   width: 50%;
   margin: auto;

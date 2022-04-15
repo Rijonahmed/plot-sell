@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../Firebase.init';
 import Sosial from './SosialLogIn/Sosial';
@@ -20,6 +20,10 @@ const Login = () => {
     loading,
     error,
   ] = useSignInWithEmailAndPassword(auth);
+
+  const [sendPasswordResetEmail] = useSendPasswordResetEmail(
+    auth
+  );
 
 
 
@@ -47,6 +51,14 @@ const Login = () => {
     );
   }
 
+  const resetPassword = async () => {
+    const email = emailRef.current.value;
+
+    await sendPasswordResetEmail(email);
+    alert('Sent email');
+
+  }
+
   return (
     <div className='w-50 mx-auto'>
       <h1 className='text-primary text-center'>Log in Please </h1>
@@ -70,6 +82,8 @@ const Login = () => {
       </Form>
       {errorElement}
       <p>new to purbachal club <span className='text-danger' onClick={navigateHandle}> new creat account</span></p>
+
+      <p>Forget Password<span className='text-danger' onClick={resetPassword}> Reset Password</span></p>
 
       <Sosial></Sosial>
 
